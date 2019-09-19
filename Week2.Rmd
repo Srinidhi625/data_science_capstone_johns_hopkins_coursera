@@ -5,6 +5,15 @@ date: "18/09/2019"
 output: html_document
 ---
 
+```{r}
+
+#install.packages("tm")
+#install.packages("NLP")
+library("NLP")
+library("tm")
+
+```
+
 ## Week 2 - Data Science Capstone
 
 ### Exploratory Analysis
