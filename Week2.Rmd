@@ -9,15 +9,18 @@ output: html_document
 
 ### Libraries and basic configuration
 
-```{r package_instance}
+```{r package_instance, echo=FALSE}
 
   #install.packages("tm") 
   #install.packages("NLP")
   library("NLP")
   library("tm")
+  library("wordcloud")
+  library("RColorBrewer")
   source("functions.R")
-
-  dir = "final/en_US/"
+  library("RWeka")
+  library("qdap")
+  library("ggplot2")
 
 ```
 
@@ -36,7 +39,7 @@ Instructions
     6. cover the same number of phrases?
     
 ### Read Data
-```{r reading_data}
+```{r reading_data, echo=TRUE}
 
 blogs_en   <- readLines("final/en_US/en_US.blogs.txt",  encoding = "UTF-8")
 news_en    <- readLines("final/en_US/en_US.news.txt", encoding = "UTF-8")
@@ -45,15 +48,22 @@ twitter_en <- readLines("final/en_US/en_US.twitter.txt", encoding = "UTF-8")
 ```
 
 ### Set seed, sampleing, and clean data and Sampleing
-```{r cleannig_data}
 
-set.seed(1000)
-
+```{r cleannig_data, echo=TRUE}
+#set.seed
+set.seed(3010)
+#sampling
 qtd_sample    <- 100
 t_blogs_en    <- sample(blogs_en, qtd_sample)
 t_news_en     <- sample(news_en, qtd_sample)
 t_twitter_en  <- sample(twitter_en, qtd_sample)
-
+t_all         <- c(t_blogs_en, t_news_en, t_twitter_en)
+#cleaning
+t_all         <- removePunctuation(t_all)
+t_all         <- stripWhitespace(t_all)
+t_all         <- removeNumbers(t_all)
+t_all         <- tolower(t_all)
+t_all         <- t_all[which(t_all!="")]
 
 ```
 
@@ -62,7 +72,27 @@ t_twitter_en  <- sample(twitter_en, qtd_sample)
 
 ```{r question_1}
 
-1
+modi_txt <- t_all
+
+modi              <- Corpus(VectorSource(modi_txt))
+modi_no_stopwords <- tm_map(modi, removeWords, stopwords("english"))
+
+tdm_modi          <- TermDocumentMatrix (modi)
+TDM1              <- as.matrix(tdm_modi)
+v                 <- sort(rowSums(TDM1), decreasing = TRUE)
+
+par(mfrow=c(1,2))
+wordcloud (modi, scale=c(5,0.5), max.words=20, random.order=FALSE, rot.per=0.35, use.r.layout=FALSE, colors=brewer.pal(8, "Dark2"))
+wordcloud (modi_no_stopwords, scale=c(5,0.5), max.words=20, random.order=FALSE, rot.per=0.35, use.r.layout=FALSE, colors=brewer.pal(8, "Dark2"))
+
+gram              <- NGramTokenizer(t_all)
+gramOne           <- NGramTokenizer(gram, Weka_control(min=1, max=1))
+gramOne           <- data.frame(table(gramOne))
+gramOne           <- gramOne[order(gramOne$Freq, decreasing = TRUE),]
+
+gramOne[1:10,]
+par(mfrow=c(1,1))
+barplot(gramOne$Freq[1:10], names.arg = as.character(gramOne$gramOne[1:10]))
 
 ```
 
@@ -71,7 +101,21 @@ t_twitter_en  <- sample(twitter_en, qtd_sample)
 
 ```{r question_2}
 
-2
+gramTwo<-NGramTokenizer(t_all, Weka_control(min=2, max=2))
+gramTwo<-data.frame(table(gramTwo))
+gramTwo<-gramTwo[order(gramTwo$Freq, decreasing = TRUE),]
+
+gramTwo[1:10,]
+par(mfrow=c(1,1))
+barplot(gramTwo$Freq[1:10], names.arg = as.character(gramTwo$gramTwo[1:10]))
+
+gramThree<-NGramTokenizer(t_all, Weka_control(min=3,max=3))
+gramThree<-data.frame(table(gramThree))
+gramThree<-gramThree[order(gramThree$Freq, decreasing = TRUE),]
+
+gramThree[1:10,]
+par(mfrow=c(1,1))
+barplot(gramThree$Freq[1:10], names.arg = as.character(gramThree$gramThree[1:10]))
 
 ```
 
