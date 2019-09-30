@@ -124,7 +124,16 @@ barplot(gramThree$Freq[1:10], names.arg = as.character(gramThree$gramThree[1:10]
 
 ```{r question_3}
 
-3
+wordcoverage<-function(x,wordcover) #x is the unigram output sorted by frequency, y is the percent word coverage
+  {nwords<-0 # initial counter
+  coverage<-wordcover*sum(x$freq) # number of words to hit coverage
+  for (i in 1:nrow(x))
+    {if (nwords >= coverage) {return (i)}
+    nwords<-nwords+x$freq[i]
+  }}
+
+wordcoverage(full_a1,0.5)
+wordcoverage(full_a1,0.9)
 
 ```
 
