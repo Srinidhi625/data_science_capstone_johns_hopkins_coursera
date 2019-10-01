@@ -86,9 +86,13 @@ wordcloud (modi, scale=c(5,0.5), max.words=20, random.order=FALSE, rot.per=0.35,
 wordcloud (modi_no_stopwords, scale=c(5,0.5), max.words=20, random.order=FALSE, rot.per=0.35, use.r.layout=FALSE, colors=brewer.pal(8, "Dark2"))
 
 gram              <- NGramTokenizer(t_all)
+gram1 = gram
 gramOne           <- NGramTokenizer(gram, Weka_control(min=1, max=1))
+gram2 = gramOne
 gramOne           <- data.frame(table(gramOne))
+gram3 = gramOne
 gramOne           <- gramOne[order(gramOne$Freq, decreasing = TRUE),]
+gram4 = gramOne
 
 gramOne[1:10,]
 par(mfrow=c(1,1))
@@ -124,27 +128,40 @@ barplot(gramThree$Freq[1:10], names.arg = as.character(gramThree$gramThree[1:10]
 
 ```{r question_3}
 
-wordcoverage<-function(x,wordcover) #x is the unigram output sorted by frequency, y is the percent word coverage
-  {nwords<-0 # initial counter
-  coverage<-wordcover*sum(x$freq) # number of words to hit coverage
-  for (i in 1:nrow(x))
-    {if (nwords >= coverage) {return (i)}
-    nwords<-nwords+x$freq[i]
-  }}
+coverage <- function(x, freq){
+  
+  tmp = 0
+  max = trunc(sum(x$Freq) * freq)
+  
+  
+  for(i in 1:nrow(x)){
+    
+    tmp = x$Freq[i] + tmp
+    
+    
+    if(tmp > max){
+      
+      return(i)
+      
+    }
+    
+  }
 
-wordcoverage(full_a1,0.5)
-wordcoverage(full_a1,0.9)
+}
+
+coverage(gramOne, 0.5)
+coverage(gramOne, 0.9)
 
 ```
 
 ## 4. How do you evaluate how many of the words come from foreign languages?
 
+We can analyze that via analyzing of UTF-code symbols. If the word contains symbols out of the that language code block, we can safely assume that this is a word in a different language.
 
-```{r question_4}
+We can use this table available online for different languages: http://www.utf8-chartable.de/unicode-utf8-table.pl?start=256&unicodeinhtml=dec
 
-5
+It takes some time, and is not really required for exploratory analysis, since the most popular words are written in Enlgish.
 
-```
 
 ## 5. Can you think of a way to increase the coverage -- identifying words that may not be in the corpora or using a smaller number of words in the dictionary to 
 
@@ -163,30 +180,9 @@ wordcoverage(full_a1,0.9)
 
 ```
 
-### Modeling
 
-Instructions:
 
-Questions to consider
 
-    1. How can you efficiently store an n-gram model (think Markov Chains)?
-    2. How can you use the knowledge about word frequencies to make your model smaller and more efficient?
-    3. How many parameters do you need (i.e. how big is n in your n-gram model)?
-    4. Can you think of simple ways to "smooth" the probabilities (think about giving all n-grams a non-zero probability even if they aren't observed in the data) ?
-    5. How do you evaluate whether your model is any good?
-    6. How can you use backoff models to estimate the probability of unobserved n-grams?
-    
-    
-    
-```{r }
-
-2+2
-
-```
-    
-    
-    
-    
     
     
     
