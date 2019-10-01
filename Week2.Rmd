@@ -9,24 +9,21 @@ output: html_document
 
 ### Libraries and basic configuration
 
-```{r package_instance, echo=FALSE}
+```{r package_instance,  warning=FALSE}
 
-  #install.packages("tm") 
-  #install.packages("NLP")
-  library("NLP")
-  library("tm")
-  library("wordcloud")
-  library("RColorBrewer")
-  source("functions.R")
-  library("RWeka")
-  library("qdap")
-  library("ggplot2")
+  suppressPackageStartupMessages(library("NLP"))
+  suppressPackageStartupMessages(library("tm"))
+  suppressPackageStartupMessages(library("wordcloud"))
+  suppressPackageStartupMessages(library("RColorBrewer"))
+  suppressPackageStartupMessages(source("functions.R"))
+  suppressPackageStartupMessages(library("RWeka"))
+  suppressPackageStartupMessages(library("qdap"))
+  suppressPackageStartupMessages(library("ggplot2"))
+  suppressPackageStartupMessages(library("ngram"))
 
 ```
 
-### Exploratory Analysis
-
-Instructions 
+### Exploratory Analysis - Instructions 
 
     Exploratory analysis - perform a thorough exploratory analysis of the data, understanding the distribution of words and relationship between the words in the corpora.
     Understand frequencies of words and word pairs - build figures and tables to understand variation in the frequencies of words and word pairs in the data.
@@ -36,7 +33,13 @@ Instructions
     3. How many unique words do you need in a frequency sorted dictionary to cover 50% of all word instances in the language? 90%?
     4. How do you evaluate how many of the words come from foreign languages?
     5. Can you think of a way to increase the coverage -- identifying words that may not be in the corpora or using a smaller number of words in the dictionary to 
-    6. cover the same number of phrases?
+    
+## Introduction and Conclusions
+
+(i) In this work, I will start showing one way to clean and sample data text of blogs, news, and twitter. After, I will construct a "Corpus" object that is a collection of documents that will support text analysis. For last, I create two functions that help the construction of "NGRAM" scenarios: my_ngram and coverage. 
+
+(ii) The conclusion of this paper is: It is necessary to sample data on personal computers, also stopwords are frequent in all scenarios, and few words are in a lot of phrases.
+    
     
 ### Read Data
 ```{r reading_data, echo=TRUE}
@@ -44,6 +47,18 @@ Instructions
 blogs_en   <- readLines("final/en_US/en_US.blogs.txt",  encoding = "UTF-8")
 news_en    <- readLines("final/en_US/en_US.news.txt", encoding = "UTF-8")
 twitter_en <- readLines("final/en_US/en_US.twitter.txt", encoding = "UTF-8")
+
+
+summary(blogs_en)
+summary(news_en)
+summary(twitter_en)
+
+
+b <- wordcount(blogs_en)
+n <- wordcount(news_en)
+t <- wordcount(twitter_en)
+
+barplot(c(b,n,t), names.arg =  c("blog", "news", "twitter"), horiz = TRUE, main="Word Count")
 
 ```
 
@@ -53,7 +68,7 @@ twitter_en <- readLines("final/en_US/en_US.twitter.txt", encoding = "UTF-8")
 #set.seed
 set.seed(3010)
 #sampling
-qtd_sample    <- 100
+qtd_sample    <- 500
 t_blogs_en    <- sample(blogs_en, qtd_sample)
 t_news_en     <- sample(news_en, qtd_sample)
 t_twitter_en  <- sample(twitter_en, qtd_sample)
@@ -64,6 +79,8 @@ t_all         <- stripWhitespace(t_all)
 t_all         <- removeNumbers(t_all)
 t_all         <- tolower(t_all)
 t_all         <- t_all[which(t_all!="")]
+
+summary(t_all)
 
 ```
 
@@ -81,22 +98,31 @@ tdm_modi          <- TermDocumentMatrix (modi)
 TDM1              <- as.matrix(tdm_modi)
 v                 <- sort(rowSums(TDM1), decreasing = TRUE)
 
-par(mfrow=c(1,2))
-wordcloud (modi, scale=c(5,0.5), max.words=20, random.order=FALSE, rot.per=0.35, use.r.layout=FALSE, colors=brewer.pal(8, "Dark2"))
-wordcloud (modi_no_stopwords, scale=c(5,0.5), max.words=20, random.order=FALSE, rot.per=0.35, use.r.layout=FALSE, colors=brewer.pal(8, "Dark2"))
+print("With stopwords")
+wordcloud (modi,  max.words=30,  random.order=FALSE, rot.per=0.35, 
+          colors=brewer.pal(8, "Dark2"))
 
-gram              <- NGramTokenizer(t_all)
-gram1 = gram
-gramOne           <- NGramTokenizer(gram, Weka_control(min=1, max=1))
-gram2 = gramOne
-gramOne           <- data.frame(table(gramOne))
-gram3 = gramOne
-gramOne           <- gramOne[order(gramOne$Freq, decreasing = TRUE),]
-gram4 = gramOne
+print("Without stopwords")
+wordcloud (modi_no_stopwords, max.words=30,  random.order=FALSE, rot.per=0.35, 
+          colors=brewer.pal(8, "Dark2"))
+
+
+my_ngram <-function(x, n){
+  
+  gramN             <- NGramTokenizer(x)
+  gramN             <- NGramTokenizer(gramN, Weka_control(min=n, max=n))
+  gramN             <- data.frame(table(gramN))
+  gramN             <- gramN[order(gramN$Freq, decreasing = TRUE),]  
+  
+  return(gramN)
+  
+}
+
+gramOne <- my_ngram(t_all, 1)
 
 gramOne[1:10,]
 par(mfrow=c(1,1))
-barplot(gramOne$Freq[1:10], names.arg = as.character(gramOne$gramOne[1:10]))
+barplot(gramOne$Freq[1:10], names.arg = as.character(gramOne$gramN[1:10]))
 
 ```
 
@@ -105,21 +131,17 @@ barplot(gramOne$Freq[1:10], names.arg = as.character(gramOne$gramOne[1:10]))
 
 ```{r question_2}
 
-gramTwo<-NGramTokenizer(t_all, Weka_control(min=2, max=2))
-gramTwo<-data.frame(table(gramTwo))
-gramTwo<-gramTwo[order(gramTwo$Freq, decreasing = TRUE),]
+
+
+gramTwo   <- my_ngram(t_all, 2)
+gramThree <- my_ngram(t_all, 3)
+
 
 gramTwo[1:10,]
-par(mfrow=c(1,1))
-barplot(gramTwo$Freq[1:10], names.arg = as.character(gramTwo$gramTwo[1:10]))
-
-gramThree<-NGramTokenizer(t_all, Weka_control(min=3,max=3))
-gramThree<-data.frame(table(gramThree))
-gramThree<-gramThree[order(gramThree$Freq, decreasing = TRUE),]
+barplot(gramTwo$Freq[1:10], names.arg = as.character(gramTwo$gramN[1:10]))
 
 gramThree[1:10,]
-par(mfrow=c(1,1))
-barplot(gramThree$Freq[1:10], names.arg = as.character(gramThree$gramThree[1:10]))
+barplot(gramThree$Freq[1:10], names.arg = as.character(gramThree$gramN[1:10]))
 
 ```
 
@@ -156,32 +178,18 @@ coverage(gramOne, 0.9)
 
 ## 4. How do you evaluate how many of the words come from foreign languages?
 
-We can analyze that via analyzing of UTF-code symbols. If the word contains symbols out of the that language code block, we can safely assume that this is a word in a different language.
+(i) If a word has accents (á, ã, ü, ç) or ideograms (男 or 男人) the word is not in english language.
 
-We can use this table available online for different languages: http://www.utf8-chartable.de/unicode-utf8-table.pl?start=256&unicodeinhtml=dec
-
-It takes some time, and is not really required for exploratory analysis, since the most popular words are written in Enlgish.
+(ii) It is possible to use a digital dictionary to verify the language of the word.
 
 
 ## 5. Can you think of a way to increase the coverage -- identifying words that may not be in the corpora or using a smaller number of words in the dictionary to 
 
+(i) Reduce unpopular words.
 
-```{r question_5}
+(ii) Uses a thesaurus to transform similar words.
 
-5
-
-```
-
-## 6. cover the same number of phrases?
-
-```{r question_6}
-
-6
-
-```
-
-
-
+(iii) Cluster similar words.
 
     
     
