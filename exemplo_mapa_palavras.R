@@ -22,8 +22,8 @@ library(RWeka)
 library(qdap)
 library(ggplot2)
 library(tm)
-library(wordcloud)
-library(RColorBrewer)
+
+
 
 blogs_en_mp   <- readLines("final/en_US/en_US.blogs.txt",  encoding =  "UTF-8")
 modi_txt <- sample(blogs_en_mp, 1000)
@@ -51,7 +51,8 @@ gram<-NGramTokenizer(modi_txt)
 gramOne<-NGramTokenizer(gram, Weka_control(min=1, max=1))
 gramOne<-data.frame(table(gramOne))
 gramOne<-gramOne[order(gramOne$Freq, decreasing = TRUE),]
-
+gramOne[1:10,]
+barplot(gramOne$Freq[1:10], names.arg = as.character(gramOne$gramOne[1:10]))
 
 
 
