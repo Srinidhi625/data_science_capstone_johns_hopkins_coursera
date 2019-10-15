@@ -1,4 +1,5 @@
 
+# BIBLIOTECAS
 suppressPackageStartupMessages(library("NLP"))
 suppressPackageStartupMessages(library("tm"))
 suppressPackageStartupMessages(library("wordcloud"))
@@ -7,18 +8,13 @@ suppressPackageStartupMessages(library("RWeka"))
 suppressPackageStartupMessages(library("qdap"))
 suppressPackageStartupMessages(library("ggplot2"))
 suppressPackageStartupMessages(library("ngram"))
-
-blogs_en   <- readLines("final/en_US/en_US.blogs.txt",  encoding = "UTF-8")
-news_en    <- readLines("final/en_US/en_US.news.txt", encoding = "UTF-8")
-twitter_en <- readLines("final/en_US/en_US.twitter.txt", encoding = "UTF-8")
-
-all_en <- c(blogs_en, news_en, twitter_en)
-
-remove(blogs_en)
-remove(news_en)
-remove(twitter_en)
+suppressPackageStartupMessages(library("stringi"))
 
 
+# FUNÇÕES
+source("functions.R")
+
+# FRASES PARA LOCALIZA
 frases <- c(
   
   "he guy in front of me just bought a pound of bacon, a bouquet, and a case of",
@@ -34,24 +30,14 @@ frases <- c(
   
 )
 
-t_all         <- removePunctuation(all_en)
-t_all         <- stripWhitespace(t_all)
-t_all         <- removeNumbers(t_all)
-t_all         <- tolower(t_all)
-t_all         <- t_all[which(t_all!="")]
+# LEITURA DAS AMOSTRAS
+dados <- readLines("sample.R", encoding = "UTF-8")
 
-t_frases         <- removePunctuation(frases)
-t_frases         <- stripWhitespace(t_frases)
-t_frases         <- removeNumbers(t_frases)
-t_frases         <- tolower(t_frases)
-t_frases         <- t_frases[which(t_frases!="")]
+# 
+gramThree <- my_ngram(t_all, 3)
+gramThree[gramThree$gramN == "^one of the$"]
 
-t_frases[1]
-
-t_all[grepl("and a case of", t_all)]
-
-
-
+str_detect(gramThree$gramN, regex("^one of the$"));
 
 
 
