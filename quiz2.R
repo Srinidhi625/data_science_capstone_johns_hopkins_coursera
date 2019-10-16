@@ -9,6 +9,7 @@ suppressPackageStartupMessages(library("qdap"))
 suppressPackageStartupMessages(library("ggplot2"))
 suppressPackageStartupMessages(library("ngram"))
 suppressPackageStartupMessages(library("stringi"))
+suppressPackageStartupMessages(library("stringr"))
 
 
 # FUNÇÕES
@@ -30,14 +31,33 @@ frases <- c(
   
 )
 
+
 # LEITURA DAS AMOSTRAS
-dados <- readLines("sample.R", encoding = "UTF-8")
+dados <- readLines("sample.out", encoding = "UTF-8")
 
-# 
-gramThree <- my_ngram(t_all, 3)
-gramThree[gramThree$gramN == "^one of the$"]
+gram1 <- my_ngram(dados, 1)
+gram2 <- my_ngram(dados, 2)
+gram3 <- my_ngram(dados, 3)
+gram4 <- my_ngram(dados, 4)
 
-str_detect(gramThree$gramN, regex("^one of the$"));
+#questao
+gram3[str_detect(gram3$gramN, "^case of \\w+$", negate = FALSE),]
+gram2[str_detect(gram2$gramN, "^of \\w+$", negate = FALSE),]
+
+
+
+
+
+
+
+
+
+
+
+#gramX[str_detect(gramX$gramN, "^insensitive$",  negate = FALSE),]
+  
+
+
 
 
 
