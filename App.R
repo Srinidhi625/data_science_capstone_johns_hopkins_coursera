@@ -45,11 +45,7 @@ server <- function(input, output) {
   
   output$predictWord <- renderText({
     
-    
-    #HTML(paste0("<p/><b>","NEXT WORD","</b>"))
-    
     "NEXT WORD"
-    
     
   })
   
