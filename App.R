@@ -18,12 +18,13 @@ ui <- fluidPage(
                
                column(6,
                       
-                      textInput("Predict next word:", "Predict next word:", width = "100%"),
+                      textInput("phrase", "Predict next word:", width = "100%"),
+                      actionButton("goButton", "Go!")
+                      
                ),
                column(width = 6,
                       
                       "The next word is:",
-                      
                       HTML(paste0("<b>",p(textOutput("predictWord")),"</b>"))
                       
                       )
@@ -45,12 +46,12 @@ server <- function(input, output) {
   
   output$predictWord <- renderText({
     
-    "NEXT WORD"
+    input$goButton
+    input$phrase
     
   })
   
   
 }
-
 
 shinyApp(ui = ui, server = server)
