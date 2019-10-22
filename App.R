@@ -7,11 +7,8 @@ ui <- fluidPage(
       column(12,
              
              titlePanel("Coursera - Final  Project - Data Science"),
-             
              h4("Please, digit your text in text box at left"),
-             
              HTML("<p>&nbsp;"),
-             
              align = "center",
              
              fluidRow(
