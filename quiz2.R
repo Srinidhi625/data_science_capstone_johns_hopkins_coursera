@@ -32,6 +32,9 @@ frases <- c(
 )
 
 
+
+
+
 # LEITURA DAS AMOSTRAS
 dados <- readLines("sample.out", encoding = "UTF-8")
 

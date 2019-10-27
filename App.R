@@ -40,11 +40,13 @@ server <- function(input, output) {
   
   library(shiny)
   library(ggplot2)
+  source("functions.R")
   
   output$predictWord <- renderText({
     
     input$goButton
-    input$phrase
+    predictWord(input$phrase)
+    
     
   })
   
