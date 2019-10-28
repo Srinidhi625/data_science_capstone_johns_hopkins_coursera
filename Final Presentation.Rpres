@@ -19,18 +19,16 @@ Coursera - john hopkins
 - For this task, it is necessary to create an aplication that receives a phrase and returns a prediction word. 
 
 
-3. Aplication Screen
+3. Methodology
 ========================================================
 
-- The user interface of this application was designed with **Web First** in mind.
-- (**1**) First enter the phrase in the text field, 
-- (**2**)  and after click in **"Go!"** button, 
-- (**3**)  the field in left shows the predict word.
+- The predict text model was created using texts from  twitter, blogs and news.
+- An exploratory analysis was performed to understand the size and distribution of the data.
+- Then n-gram was created to understand the most common relationships between words.
+- This model has been optimized to return data efficiently and accurately.
+- Finally, a shiny application was created to get a sentence and return a prediction of possible word.
 
-![Application Screenshot](tela.png)
-
-
-4. algorithm
+4. Application
 ========================================================
 
 - The user interface of this application was designed with **Web First** in mind.
