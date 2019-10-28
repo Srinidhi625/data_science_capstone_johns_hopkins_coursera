@@ -2,9 +2,9 @@
 ========================================================
 author: Marcelo Gomes Gadelha
 date: 10/28/2019
-autosize: true
+autosize: false
 
-Coursera - john hopkins
+Coursera - John Hopkins
 <p>
 [https://www.coursera.org/specializations/jhu-data-science](https://www.coursera.org/specializations/jhu-data-science)
 <p>
@@ -24,7 +24,7 @@ Coursera - john hopkins
 
 - The predict text model was created using texts from  twitter, blogs and news.
 - An exploratory analysis was performed to understand the size and distribution of the data.
-- Then n-gram was created to understand the most common relationships between words.
+- Then n-gram ( bi-,tri- and quadgram) were created to understand the most common relationships between words.
 - This model has been optimized to return data efficiently and accurately.
 - Finally, a shiny application was created to get a sentence and return a prediction of possible word.
 
@@ -42,8 +42,12 @@ Coursera - john hopkins
 5. Additional Information
 ========================================================
 
-* The app is hosted on shinyapps.io: [https://marcelox3010.shinyapps.io/cdsc](https://marcelox3010.shinyapps.io/cdsc)
+* The app is hosted on shinyapps.io: 
 
-* The code of this application and this presentation is hosted on: [https://github.com/marcelox3010/data_science_capstone_johns_hopkins_coursera](https://github.com/marcelox3010/data_science_capstone_johns_hopkins_coursera)
+[https://marcelox3010.shinyapps.io/cdsc](https://marcelox3010.shinyapps.io/cdsc)
+
+* The code of this application and this presentation is hosted on:
+
+[https://github.com/marcelox3010/data_science_capstone_johns_hopkins_coursera](https://github.com/marcelox3010/data_science_capstone_johns_hopkins_coursera)
 
 
