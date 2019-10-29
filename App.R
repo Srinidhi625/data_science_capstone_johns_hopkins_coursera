@@ -38,7 +38,8 @@ eui <- fluidPage(
 
 server <- function(input, output) {
   
-  suppressPackageStartupMessages(library("tm"))
+  library("tm")
+  library("stringr")
   
   source("functions.R")
   
