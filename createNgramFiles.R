@@ -58,10 +58,3 @@ save(gram3, file="gram3.Rda")
 gram4 <- my_ngram(linhas, 4)
 save(gram4, file="gram4.Rda")
 
-
-
-
-
-
-
-

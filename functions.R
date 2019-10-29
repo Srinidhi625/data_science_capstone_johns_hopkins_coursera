@@ -1,8 +1,9 @@
 
+
+
 my_ngram <-function(x, n){
   
-  gramN             <- NGramTokenizer(x)
-  gramN             <- NGramTokenizer(gramN, Weka_control(min=n, max=n))
+  gramN             <- NGramTokenizer(x, Weka_control(min=n, max=n))
   gramN             <- data.frame(table(gramN))
   gramN             <- gramN[order(gramN$Freq, decreasing = TRUE),]
   
@@ -31,3 +32,34 @@ coverage <- function(x, freq){
   }
   
 }
+
+predictWord <- function(frase){
+  
+
+  
+  
+  return(paste0(frase, " <- "))
+  
+  
+}
+
+cleanPhrase <- function(frase){
+  
+  frase         <- removePunctuation(frase)
+  frase         <- stripWhitespace(frase)
+  frase         <- removeNumbers(frase)
+  frase         <- tolower(frase)
+  frase         <- frase[which(frase!="")]
+  
+  return(frase)
+  
+}
+
+
+
+
+
+
+
+
+
