@@ -1,4 +1,4 @@
-ui <- fluidPage(
+eui <- fluidPage(
   
   ui <- fluidPage(
     
@@ -40,13 +40,22 @@ server <- function(input, output) {
   
   library(shiny)
   library(ggplot2)
+  suppressPackageStartupMessages(library("NLP"))
+  suppressPackageStartupMessages(library("tm"))
+  suppressPackageStartupMessages(library("wordcloud"))
+  suppressPackageStartupMessages(library("RColorBrewer"))
+  suppressPackageStartupMessages(source("functions.R"))
+  suppressPackageStartupMessages(library("RWeka"))
+  suppressPackageStartupMessages(library("qdap"))
+  suppressPackageStartupMessages(library("ggplot2"))
+  suppressPackageStartupMessages(library("ngram"))
   source("functions.R")
   
   output$predictWord <- renderText({
     
     input$goButton
-    predictWord(input$phrase)
-    
+    frase <- cleanPhrase(input$phrase)
+    predictWord(frase)
     
   })
   
