@@ -38,18 +38,17 @@ eui <- fluidPage(
 
 server <- function(input, output) {
   
-  library(shiny)
-  library(ggplot2)
-  suppressPackageStartupMessages(library("NLP"))
   suppressPackageStartupMessages(library("tm"))
-  suppressPackageStartupMessages(library("wordcloud"))
-  suppressPackageStartupMessages(library("RColorBrewer"))
-  suppressPackageStartupMessages(source("functions.R"))
-  suppressPackageStartupMessages(library("RWeka"))
-  suppressPackageStartupMessages(library("qdap"))
-  suppressPackageStartupMessages(library("ggplot2"))
-  suppressPackageStartupMessages(library("ngram"))
+  
   source("functions.R")
+  
+  load(file = "gram2.Rda")
+  load(file = "gram3.Rda")
+  load(file = "gram4.Rda")
+  
+  gram2 <<- gram2
+  gram3 <<- gram3
+  gram4 <<- gram4
   
   output$predictWord <- renderText({
     
