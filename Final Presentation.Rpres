@@ -21,12 +21,12 @@ Coursera - John Hopkins
 3. Methodology
 ========================================================
 
-- The predict text model was created using texts from  twitter, blogs and news.
+- One predict text model was created using texts from  twitter, blogs and news.
 - An exploratory analysis was performed to understand the size and distribution of the data.
 - Then n-gram ( bi-,tri- and quadgram) were created to understand the most common relationships between words.
-- This model has been optimized to return data efficiently and accurately.
+- This model has been optimized to return data efficiently and accurately based in statitiscs and quantity of ngram.
 - Finally, a shiny application was created to get a sentence and return a prediction of possible word.  
-- The user interface of this application was designed with **Web Mobile Search Style** in mind.
+- The user interface of this application was designed with **Web Search Style** in mind.
 
 4. Application
 ========================================================
