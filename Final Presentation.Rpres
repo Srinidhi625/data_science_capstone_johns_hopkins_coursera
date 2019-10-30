@@ -2,7 +2,7 @@
 ========================================================
 author: Marcelo Gomes Gadelha
 date: 10/28/2019
-autosize: false
+autosize: true
 
 Coursera - John Hopkins
 <p>
@@ -16,8 +16,7 @@ Coursera - John Hopkins
 
 - This presentation shows a overview of the final project of Data Science Specialization.
 - The main objective of this project is create a aplication with predictive text model. 
-- For this task, it is necessary to create an aplication that receives a phrase and returns a prediction word. 
-
+- For this task, it was necessary to create an aplication that receives a phrase and returns a prediction word. 
 
 3. Methodology
 ========================================================
@@ -26,17 +25,17 @@ Coursera - John Hopkins
 - An exploratory analysis was performed to understand the size and distribution of the data.
 - Then n-gram ( bi-,tri- and quadgram) were created to understand the most common relationships between words.
 - This model has been optimized to return data efficiently and accurately.
-- Finally, a shiny application was created to get a sentence and return a prediction of possible word.
+- Finally, a shiny application was created to get a sentence and return a prediction of possible word.  
+- The user interface of this application was designed with **Web Mobile Search Style** in mind.
 
 4. Application
 ========================================================
 
-- The user interface of this application was designed with **Web First** in mind.
 - (**1**) First enter the phrase in the text field, 
-- (**2**)  and after click in **"Go!"** button, 
-- (**3**)  the field in left shows the predict word.
+- (**2**)  and after click in **"Go!"** button or press **"Space"** in keyboard, 
+- (**3**)  the field in right shows the predict word.
 
-![Application Screenshot](tela.png)
+![Application Screenshot](tela_v2.png)
 
 
 5. Additional Information
@@ -44,7 +43,7 @@ Coursera - John Hopkins
 
 * The app is hosted on shinyapps.io: 
 
-[https://marcelox3010.shinyapps.io/cdsc](https://marcelox3010.shinyapps.io/cdsc)
+[https://marcelox3010.shinyapps.io/nextword](https://marcelox3010.shinyapps.io/nextword)
 
 * The code of this application and this presentation is hosted on:
 
