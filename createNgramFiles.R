@@ -17,7 +17,7 @@ source("functions.R")
 set.seed(3010)
 
 #reading and sampling
-perc <- 0.05
+perc <- 0.03
 
 blogs_en        <- readLines("final/en_US/en_US.blogs.txt", encoding = "UTF-8", skipNul = TRUE)
 t_blogs_en      <- sample(blogs_en, (length(blogs_en)*perc))
