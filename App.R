@@ -7,7 +7,7 @@ eui <- fluidPage(
       column(12,
              
              titlePanel("Coursera - Final  Project - Data Science"),
-             h4("Please, digit your text in text box at left"),
+             h4("Please, digit your phrase in text box at left"),
              HTML("<p>&nbsp;"),
              align = "center",
              
@@ -21,10 +21,26 @@ eui <- fluidPage(
                ),
                column(width = 6,
                       
-                      "The next word is:",
+                      "The next word for:",
+                      p(textOutput("frase")),
+                      "is: ",
                       HTML(paste0("<b>",p(textOutput("predictWord")),"</b>"))
                       
                       )
+             ),
+             fluidRow(
+               
+               column(12,
+                      
+                      HTML("<P><BR><P><BR><P><BR><P>"),
+                      h3("Capstone Project"),
+                      p("========================================================"),
+                      p("author: Marcelo Gomes Gadelha"),
+                      p("date: 10/28/2019"),
+                      p("Coursera - John Hopkins")
+                      
+                      
+               )
              )
              
       )
@@ -43,9 +59,9 @@ server <- function(input, output) {
   
   source("functions.R")
   
-  load(file = "gram2.Rda")
-  load(file = "gram3.Rda")
-  load(file = "gram4.Rda")
+  readRDS(file = "gram2_0.05.Rda")
+  readRDS(file = "gram3_0.05.Rda")
+  readRDS(file = "gram4_0.05.Rda")
   
   gram2 <<- gram2
   gram3 <<- gram3
@@ -56,6 +72,17 @@ server <- function(input, output) {
     input$goButton
     frase <- cleanPhrase(input$phrase)
     predictWord(frase)
+    
+  })
+  
+  
+  
+  output$frase <- renderText({
+    
+    input$goButton
+    qtd_words <- sapply(strsplit(input$phrase, " "), length)
+    if(qtd_words > 0) input$phrase
+    else "Digit Something..."
     
   })
   

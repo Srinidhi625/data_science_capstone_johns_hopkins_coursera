@@ -63,17 +63,14 @@ predictWord <- function(frase){
     
     if(is.na(predict)) return(paste0("1. NO PREDICTIONS AVALIBLES FOR: ", frase))
     
-    predict <- tail(strsplit(predict, split=" ")[[1]],1)
-    return(predict)
-    
   }else if(qtd_words == 2){
     
     predict <- as.character(gram3[str_detect(gram3$gramN, paste0("^",frase," \\w+$"), negate = FALSE), 1][1])
     
     if(is.na(predict)){
       
-      frase         <-  tail(strsplit(frase, split=" ")[[1]],2)
-      frase         <-  paste0(frase[3])
+      frase         <-  tail(strsplit(frase, split=" ")[[1]],1)
+      frase         <-  frase[1]
       
       predict <- as.character(gram2[str_detect(gram2$gramN, paste0("^",frase," \\w+$"), negate = FALSE), 1][1])  
       
@@ -94,22 +91,22 @@ predictWord <- function(frase){
     predict <- as.character(gram4[str_detect(gram4$gramN, paste0("^",frase," \\w+$"), negate = FALSE), 1][1])
     
     if(is.na(predict)){
-      
-      frase         <-  tail(strsplit(frase, split=" ")[[1]],3)
-      frase         <-  paste0(frase[2], " ", frase[3])
+   
+      frase         <-  tail(strsplit(frase, split=" ")[[1]],2)
+      frase         <-  paste0(frase[1], " ", frase[2])
       
       predict <- as.character(gram3[str_detect(gram3$gramN, paste0("^",frase," \\w+$"), negate = FALSE), 1][1])
       
       if(is.na(predict)){
         
-        frase         <-  tail(strsplit(frase, split=" ")[[1]],3)
-        frase         <-  paste0(frase[3])
+        frase         <-  tail(strsplit(frase, split=" ")[[1]],1)
+        frase         <-  frase[1]
         
         predict <- as.character(gram2[str_detect(gram2$gramN, paste0("^",frase," \\w+$"), negate = FALSE), 1][1])  
         
         if(is.na(predict)){
           
-          return(paste0("3. NO PREDICTIONS AVALIBLES FOR: ", original))
+          return(paste0("3. NO PREDICTIONS AVALIBLES FOR: ", frase))
           
         }
         

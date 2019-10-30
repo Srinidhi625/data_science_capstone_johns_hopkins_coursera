@@ -17,7 +17,7 @@ source("functions.R")
 set.seed(3010)
 
 #reading and sampling
-perc <- 0.01
+perc <- 0.05
 
 blogs_en        <- readLines("final/en_US/en_US.blogs.txt", encoding = "UTF-8", skipNul = TRUE)
 t_blogs_en      <- sample(blogs_en, (length(blogs_en)*perc))
@@ -47,14 +47,16 @@ write(t_all, file = "sample.out", ncolumns = 1)
 remove(t_all)
 
 #create ngram
-options(java.parameters = "-Xmx4000m")
+options(java.parameters = "-Xmx8000m")
+options(java.parameters = c("-XX:+UseConcMarkSweepGC", "-Xmx8192m"))
+
 
 linhas        <- readLines("sample.out", encoding = "UTF-8", skipNul = TRUE)
 
 gram2 <- my_ngram(linhas, 2)
-save(gram2, file="gram2.Rda")
+saveRDS(gram2, file=paste0("gram2_",perc,".Rda"), compress = TRUE)
 gram3 <- my_ngram(linhas, 3)
-save(gram3, file="gram3.Rda")
+saveRDS(gram3, file=paste0("gram3_",perc,".Rda"), compress = TRUE)
 gram4 <- my_ngram(linhas, 4)
-save(gram4, file="gram4.Rda")
+saveRDS(gram4, file=paste0("gram4_",perc,".Rda"), compress = TRUE)
 
