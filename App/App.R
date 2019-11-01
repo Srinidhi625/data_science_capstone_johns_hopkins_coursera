@@ -59,9 +59,9 @@ server <- function(input, output) {
   
   source("functions.R")
   
-  gram2 <<- readRDS(file = "gram2_0.02.Rda")
-  gram3 <<- readRDS(file = "gram3_0.02.Rda")
-  gram4 <<- readRDS(file = "gram4_0.02.Rda")
+  gram2 <<- readRDS(file = "gram2.Rda")
+  gram3 <<- readRDS(file = "gram3.Rda")
+  gram4 <<- readRDS(file = "gram4.Rda")
   
   output$predictWord <- renderText({
     
