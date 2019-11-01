@@ -21,4 +21,5 @@ Folder - App
 -------------------------------------------------------------------------------
 
 App of project
+
 **to generate ngram (gram2.Rda, gram3.Rda and gram4.Rda) run createNgramFiles.R
