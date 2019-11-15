@@ -1,4 +1,4 @@
-# Data Science Specialization - Capstone Project - Johns Hopkins/Coursera
+# Data Science Specialization - Capstone Project - John Hopkins/Coursera
 
 Johns Hopkins University - Cousera
 
